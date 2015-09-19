@@ -54,11 +54,6 @@ Note that shipped templates in ``templates/icomoon/`` are written using Foundati
 Usage
 *****
 
-* selection.json from icomoon archive;
-* depend on settings.ICOMOON_MANIFEST_FILEPATH
-* template made with Foundation5;
-* webfont loading is in charge of user;
-
 When it's installed you could reach the webfont gallery from ``/icomoon/``.
 
 The gallery display all defined icons in the manifest, giving the CSS classname, the unicode codepoint and the UTF-8 code.
