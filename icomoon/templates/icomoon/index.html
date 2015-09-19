@@ -1,0 +1,45 @@
+{% extends "skeleton.html" %}
+
+{% block base_content %}
+<div class="row larger">
+    <h2>Available webfont icons</h2>
+    
+    {% if ICOMOON_MANIFEST_FILEPATH == None %}
+    <div data-alert class="alert-box alert round text-center">
+        <p><code>settings.ICOMOON_MANIFEST_FILEPATH</code> is not configured, unable to find Manifest file.</p>
+    </div>
+    {% elif icomoon_manifest == None %}
+    <div data-alert class="alert-box alert round text-center">
+        <p>Unable to open Manifest file setted in <code>settings.ICOMOON_MANIFEST_FILEPATH</code> to:</p>
+        <p><code>{{ ICOMOON_MANIFEST_FILEPATH }}</code></p>
+    </div>
+    {% else %}
+    <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4 icomoon-icons">
+        {% for icon_key,icon_datas in icomoon_manifest.items %}
+        <li>
+            <p class="text-center visual"><i class="{{ icon_datas.class_name }} icon-3x"></i></p>
+            <table class="expand">
+                <tr>
+                    <th class="text-right">CSS</th>
+                    <td>{{ icon_datas.class_name }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Unicode</th>
+                    <td>{{ icon_datas.unicode }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">UTF-8</th>
+                    <td>{{ icon_datas.utf8 }}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">Integer</th>
+                    <td>{{ icon_datas.int }}</td>
+                </tr>
+            </table>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+</div>
+{% endblock %}
