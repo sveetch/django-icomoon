@@ -37,11 +37,12 @@ Define the setting for the path to the Icomoon manifest file. This is the ``sele
 
     ICOMOON_MANIFEST_FILEPATH = '/home/work/myproject/webapp_statics/fonts/selection.json'
 
-Default behavior require users to be authenticated to view the gallery, if you want to open it also for anonymous, define the following setting: ::
+Obviously the path may differ for your project.
+
+Default behavior require users to be authenticated to view the gallery, if you want to open it for anonymous define the following setting: ::
 
     ICOMOON_PRIVATE = True
 
-Obviously the path may differ for your project.
 
 Then mount its urls in your main ``urls.py`` : ::
 
