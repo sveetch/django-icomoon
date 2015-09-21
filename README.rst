@@ -33,9 +33,13 @@ Add it to your installed Django apps in settings : ::
         ...
     )
 
-Define the setting for the path to the Icomoon manifest file. This is the ``selection.json`` file given in the webfont archive downloaded from Icomoon : ::
+Define the setting for the path to the Icomoon manifest file. This is the ``selection.json`` file given in the webfont archive downloaded from Icomoon: ::
 
     ICOMOON_MANIFEST_FILEPATH = '/home/work/myproject/webapp_statics/fonts/selection.json'
+
+Default behavior require users to be authenticated to view the gallery, if you want to open it also for anonymous, define the following setting: ::
+
+    ICOMOON_PRIVATE = True
 
 Obviously the path may differ for your project.
 
