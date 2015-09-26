@@ -37,7 +37,12 @@ Define the setting for the path to the Icomoon manifest file. This is the ``sele
 
     ICOMOON_MANIFEST_FILEPATH = '/home/work/myproject/webapp_statics/fonts/selection.json'
 
-Obviously the path may differ for your project.
+Or instead you can define multiple webfont manifest, but each one must be named: ::
+
+    ICOMOON_MANIFEST_FILEPATH = (
+        ('Foo', '/home/work/myproject/webapp_statics/fonts/foo/selection.json'),
+        ('Bar', '/home/work/myproject/webapp_statics/fonts/bar/selection.json'),
+    )
 
 Default behavior require users to be authenticated to view the gallery, if you want to open it for anonymous define the following setting: ::
 

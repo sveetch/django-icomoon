@@ -8,7 +8,7 @@ import json, os
 from django.conf import settings
 from django.views import generic
 
-from .parser import parse_icomoon_manifest
+from .parser import parse_icomoon_manifest, WebfontStore
 
 
 class WebfontIconListFreeView(generic.TemplateView):
@@ -19,13 +19,13 @@ class WebfontIconListFreeView(generic.TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(WebfontIconListFreeView, self).get_context_data(**kwargs)
+        
         manifest_filepath = getattr(settings, 'ICOMOON_MANIFEST_FILEPATH', None)
-        context.update({
-            'ICOMOON_MANIFEST_FILEPATH': manifest_filepath,
-            'icomoon_manifest': None,
-        })
-        if manifest_filepath and os.path.exists(manifest_filepath):
-            context['icomoon_manifest'] = parse_icomoon_manifest(open(manifest_filepath, 'rb'))
+        if manifest_filepath is not None:
+            webfont_store = WebfontStore(manifest_filepath)
+            webfont_store.fetch()
+            context['webfont_store'] = webfont_store
+            
         return context
 
 if getattr(settings, 'ICOMOON_PRIVATE', True):
