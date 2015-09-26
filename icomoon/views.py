@@ -8,7 +8,7 @@ import json, os
 from django.conf import settings
 from django.views import generic
 
-from .parser import parse_icomoon_manifest, WebfontStore
+from .parser import WebfontStore
 
 
 class WebfontIconListFreeView(generic.TemplateView):

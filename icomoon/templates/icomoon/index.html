@@ -18,7 +18,7 @@
     </div>
     {% else %}
         {% for font_name,font_icons in webfont_store.get_manifests.items %}
-        <h3>{{ font_name }}</h3>
+        <h3>{{ font_name }} ({{ font_icons|length }})</h3>
         <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4 icomoon-icons">
             {% for icon_key,icon_datas in font_icons.items %}
             <li>
