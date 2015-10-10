@@ -20,10 +20,10 @@ class WebfontIconListFreeView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(WebfontIconListFreeView, self).get_context_data(**kwargs)
         
-        manifest_filepath = getattr(settings, 'ICOMOON_MANIFEST_FILEPATH', None)
-        if manifest_filepath is not None:
-            webfont_store = WebfontStore(manifest_filepath)
-            webfont_store.fetch()
+        webfonts = getattr(settings, 'ICOMOON_WEBFONTS', {})
+        if webfonts is not None:
+            webfont_store = WebfontStore(settings.ICOMOON_MANIFEST_FILENAME)
+            webfont_store.fetch(webfonts)
             context['webfont_store'] = webfont_store
             
         return context

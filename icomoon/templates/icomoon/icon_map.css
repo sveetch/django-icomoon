@@ -1,0 +1,4 @@
+{% for icon_name,icon_values in icons.items %}.{{ icon_values.class_name }}:before {
+    content: "{{ icon_values.utf8 }}";
+}
+{% endfor %}

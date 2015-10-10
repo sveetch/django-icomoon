@@ -5,31 +5,45 @@ import json, os
 from collections import OrderedDict
 from operator import itemgetter
 
+from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 class WebfontStore(object):
     """
     Webfont store to collect every given manifest
     """
-    def __init__(self, manifest_filepaths):
+    def __init__(self, manifest_filename):
+        self.manifest_filename = manifest_filename
         self.manifests = OrderedDict()
-        self.manifest_filepaths = manifest_filepaths
         self.errors = {}
-        
-        # Maintain compatibility for django-icomoon<0.2 installs when there was only an 
-        # unique webfont without a name
-        if isinstance(self.manifest_filepaths, basestring):
-            self.manifest_filepaths = (('Default', self.manifest_filepaths),)
             
-    def fetch(self):
+    def fetch(self, webfonts):
         """
         Open all defined manifest files and parse them
+        
+        @webfonts: Dict of Dict from settings.ICOMOON_WEBFONTS
         """
-        sorted_manifests = sorted(self.manifest_filepaths, key=itemgetter(0))
-        for name,filepath in sorted_manifests:
-            if os.path.exists(filepath):
-                self.manifests[name] = self.parse_manifest(filepath)
-            else:
-                self.errors[name] = "Filepath for webfont <strong>{name}</strong> does not exists: <code>{filepath}</code>".format(name=name, filepath=filepath)
+        sorted_keys = sorted(webfonts.keys())
+        for webfont_name in sorted_keys:
+            self.get(webfont_name, webfonts[webfont_name])
+            
+    def get(self, webfont_name, webfont_settings):
+        """
+        Get a manifest file and parse it
+        
+        @webfont_name: Webfont key name
+        @webfont_settings: Dict of webfont settings
+        """
+        try:
+            webfont_settings = extend_webfont_settings(webfont_settings)
+        except IcomoonSettingsError as e:
+            self.errors[webfont_name] = "Invalid webfont settings for '{}': {}".format(webfont_name, e.value)
+            return
+            
+        filepath = os.path.join(webfont_settings['fontdir_path'], self.manifest_filename)
+        if os.path.exists(filepath):
+            self.manifests[webfont_name] = self.parse_manifest(filepath)
+        else:
+            self.errors[webfont_name] = "Filepath for webfont <strong>{name}</strong> does not exists: <code>{filepath}</code>".format(name=webfont_name, filepath=filepath)
             
     def get_icon_key(self, elem):
         """
