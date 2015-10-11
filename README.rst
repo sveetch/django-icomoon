@@ -5,7 +5,7 @@
 Django Icomoon
 ==============
 
-A `Django`_ app to display an icon gallery, listing all defined icons in Zip archive you downloaded from `Icomoon`_.
+A `Django`_ app to deploy downloaded wefonts from `Icomoon`_ and display them in a gallery.
 
 Links
 *****
@@ -21,6 +21,9 @@ Requires
 
 Install
 *******
+
+.. warning::
+        Since ``0.3.0`` lots of settings have changed in a backward incompatible way, you shoud totally redo them when updating.
 
 First install the package ::
 
@@ -45,6 +48,7 @@ Default behavior require users to be authenticated to view the gallery, if you w
 Webfonts and manifests
 ----------------------
 
+
 Now you must define at least one webfont in your project settings like this: ::
 
     ICOMOON_MANIFEST_FILEPATH = {
@@ -54,12 +58,12 @@ Now you must define at least one webfont in your project settings like this: ::
         },
     }
 
-Each item is a tuple of three elements, respectively:
+Each website entry is a dict containing the following values:
 
-Name
-    Displayed webfont name in Gallery, also used in the command line tool so you should keep it 'slug' compatible (no spaces, no special character).
-Font directory
-    Path to the directory where belong these webfont font files.
+fontdir_path
+    (Required) Absolute path to the webfont directory.
+csspart_path
+    (Optional) Absolute path where will be written the css part containing webfont icons.
 
 Urls
 ----
@@ -89,17 +93,19 @@ When it's installed you could reach the webfont gallery from ``/icomoon/``.
 
 The gallery display all defined icons in the manifest, giving the CSS classname, the unicode codepoint and the UTF-8 code.
 
-Deployment from command line
-----------------------------
+Deployment
+----------
 
 Put the downloaded ZIP archive on your server then simply use the command line: ::
 
-    django-instance icomoon_deploy Default icomoon.zip
+    ./manage.py icomoon_deploy Default icomoon.zip
 
-Where the first argument is the webfont name (defined in your settings, see `Webfonts and manifests`_) to use and the second argument is the path to your download archive.
+The first argument is the webfont key name (defined in your settings, see `Webfonts and manifests`_) to use and the second argument is the path to your downloaded archive to deploy: ::
 
-The tool will validate the archive content structure then if all requirements are meets (a JSON manifest and at least one supported font format) it will deploy the archive content to defined webfont paths in settings. 
+    ./manage.py icomoon_deploy [Webfont name] [Zip archive path]
 
-The manifest is used to build a css file where all icon selectors are defined, so you can import it to directly use your icons.
+The tool will validate the archive content structure then if all requirements are meets (a JSON manifest and at least one supported font format) it will deploy the archive content to defined path (``fontdir_path``) in webfont settings. 
+
+Optionaly, if a path (``csspart_path``) is defined for, the manifest will be used to build a css file where all icon selectors are defined, so you can import it to directly use your icons.
 
 Finally the manifest is installed in the same directory than font files.

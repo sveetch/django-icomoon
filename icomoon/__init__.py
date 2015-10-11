@@ -1,4 +1,4 @@
 """
-A Django app to display an icon gallery, listing all defined icons in the Icomoon manifest you download
+A `Django`_ app to deploy wefonts from `Icomoon`_ and display them
 """
-__version__ = '0.3.0-pre1'
+__version__ = '0.3.0'
