@@ -17,7 +17,7 @@ Requires
 ********
 
 * `Django`_ >= 1.4;
-* `django-braces`_ >= 1.2.0,<1.4;
+* `django-braces`_ >= 1.2.0;
 
 Install
 *******
