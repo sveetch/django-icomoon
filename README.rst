@@ -7,6 +7,9 @@ Django Icomoon
 
 A `Django`_ app to deploy downloaded wefonts from `Icomoon`_ and display them in a gallery.
 
+.. warning::
+        Since version ``0.4.0`` Django support for 1.7 version and less has been dropped.
+
 Links
 *****
 
@@ -16,14 +19,11 @@ Links
 Requires
 ********
 
-* `Django`_ >= 1.4;
+* `Django`_ >= 1.8;
 * `django-braces`_ >= 1.2.0;
 
 Install
 *******
-
-.. warning::
-        Since ``0.3.0`` lots of settings have changed in a backward incompatible way, you shoud totally redo them when updating.
 
 First install the package ::
 
@@ -104,8 +104,32 @@ The first argument is the webfont key name (defined in your settings, see `Webfo
 
     ./manage.py icomoon_deploy [Webfont name] [Zip archive path]
 
-The tool will validate the archive content structure then if all requirements are meets (a JSON manifest and at least one supported font format) it will deploy the archive content to defined path (``fontdir_path``) in webfont settings. 
+Default values for these two arguments are respectively ``Default`` and ``icomoon.zip``, so if they match your webfont settings, you don't need to give them: ::
+
+    ./manage.py icomoon_deploy
+
+The tool will validate the archive content structure then if all requirements are meets (a JSON manifest and at least one supported font format) it will deploy the archive content to defined path (``fontdir_path``) in webfont settings.
 
 Optionaly, if a path (``csspart_path``) is defined for, the manifest will be used to build a css file where all icon selectors are defined, so you can import it to directly use your icons.
 
 Finally the manifest is installed in the same directory than font files.
+
+History
+*******
+
+Version 0.4.0 - 2016/04/06
+--------------------------
+
+* Dropped support for Django <= 1.7;
+* Fixed command line arguments for Django == 1.8;
+
+Version 0.3.1 - 2015/10/24
+--------------------------
+
+* Lowering down minimal 'django-braces' dependancy, better classifiers for Django versions in setup.py;
+
+Version 0.3.0 - 2015/10/11
+--------------------------
+
+* Implemented command line to deploy webfont from download ZIP on Icomoon, contains many backward incompatible settings, this is related to issue #2;
+
