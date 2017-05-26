@@ -23,6 +23,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires=[
+        'Django>=1.8,<1.9',
         'django-braces>=1.2.0',
     ],
     include_package_data=True,
