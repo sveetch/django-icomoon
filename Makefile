@@ -26,7 +26,7 @@ flake:
 	flake8 --show-source icomoon
 
 tests:
-	py.test -vv
+	py.test -vv project_test/
 
 quality: tests flake
 
