@@ -78,7 +78,7 @@ def test_extend_settings_success():
     ),
 ])
 def test_extend_settings_csspart_path(webfont_settings, attempted):
-    """Missing or empty 'csspart_path' automatically filled to None"""
+    """Missing or empty 'csspart_path' is automatically set to None"""
     assert extend_webfont_settings(webfont_settings) == attempted
 
 

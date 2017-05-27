@@ -11,7 +11,7 @@ ICOMOON_WEBFONTS = {
     #},
 }
 
-# Private mode require to be logged to reach the gallery, use False to grant access 
+# Private mode require to be logged to reach the gallery, use False to grant access
 # to anonymous users
 ICOMOON_PRIVATE = True
 
