@@ -28,9 +28,21 @@ class WebfontStore(object):
 
     def parse_manifest(self, fp):
         """
-        Open the JSON file then find the icons and some options
+        Open manifest JSON file and build icon map
 
-        @fp is either a file object or a string containing the file path to open
+        Args:
+            fp (string or fileobject): Either manifest filepath to open or
+                manifest File object.
+
+        Returns:
+            dict: Webfont icon map. Contains:
+
+            * ``class_name``: Builded icon classname with prefix configured
+              in manifest (from parameters in Icomoon interface);
+            * ``int``: Icon integer code like ``59649``;
+            * ``hex``: Icon hexadecimal code like ``0xe901``;
+            * ``unicode``: Icon unicode like ``U+E901``;
+            * ``utf8``! Icon UTF8 code like ``\e901``;
         """
         # Given a string for file path to open
         if isinstance(fp, string_types):
@@ -62,10 +74,13 @@ class WebfontStore(object):
 
     def get(self, webfont_name, webfont_settings):
         """
-        Get a manifest file and parse it
+        Get a manifest file, parse and store it.
 
-        @webfont_name: Webfont key name
-        @webfont_settings: Dict of webfont settings
+        Args:
+            webfont_name (string): Webfont key name. Used to store manifest
+                and potentially its parser error
+            webfont_settings (dict): Webfont settings (an item value from
+                ``settings.ICOMOON_WEBFONTS``).
         """
         try:
             webfont_settings = extend_webfont_settings(webfont_settings)
@@ -81,13 +96,23 @@ class WebfontStore(object):
 
     def fetch(self, webfonts):
         """
-        Open all defined manifest files and parse them
+        Store every defined webfonts.
 
-        @webfonts: Dict of Dict from settings.ICOMOON_WEBFONTS
+        Webfont are stored with sort on their name.
+
+        Args:
+            webfonts (dict): Dictionnary of webfont settings from
+                ``settings.ICOMOON_WEBFONTS``.
         """
         sorted_keys = sorted(webfonts.keys())
         for webfont_name in sorted_keys:
             self.get(webfont_name, webfonts[webfont_name])
 
     def get_manifests(self):
+        """
+        Simple shortcut to get stored manifests.
+
+        Returns:
+            collections.OrderedDict: Stored webfont manifest.
+        """
         return self.manifests

@@ -12,8 +12,8 @@ def extend_webfont_settings(webfont_settings):
     option.
 
     Args:
-        webfont_settings (dict): Webfont settings (an item from
-        ``settings.ICOMOON_WEBFONTS``).
+        webfont_settings (dict): Webfont settings (an item value from
+            ``settings.ICOMOON_WEBFONTS``).
 
     Returns:
         dict: Webfont settings
