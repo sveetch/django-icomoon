@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from icomoon.store import WebfontStore
 from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
+
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         #make_option("--name", dest="webfont_name", default=None, help="Webfont name as defined into settings.ICOMOON_WEBFONTS, this is required"),
@@ -50,7 +51,6 @@ class Command(BaseCommand):
         self.deploy()
         self._info("Finished !")
 
-
     def print_output(self, msg, *args, **kwargs):
         self.stdout.write(msg.format(*args, **kwargs))
 
@@ -68,7 +68,6 @@ class Command(BaseCommand):
     def _info(self, msg, *args, **kwargs):
         if self.verbosity >= 1:
             self.print_output(msg, *args, **kwargs)
-
 
     def deploy(self):
         """
@@ -108,7 +107,6 @@ class Command(BaseCommand):
         # Install files
         self.install(tmp_container, font_dir, css_content)
 
-
     def extract(self, zip_archive, font_files):
         """
         Extract files to install
@@ -136,13 +134,11 @@ class Command(BaseCommand):
 
         return tmp_container, css_content
 
-
     def render_css(self, template_path, icons):
         """
         Render CSS template to contain the icons stylesheet map
         """
         return render_to_string(template_path, {'icons': icons})
-
 
     def install(self, tmp_container, font_tmpdir, css_content):
         """
@@ -155,17 +151,20 @@ class Command(BaseCommand):
         # Clean previous font dir
         if os.path.exists(self.webfont_settings['fontdir_path']):
             shutil.rmtree(self.webfont_settings['fontdir_path'])
+        font_srcdir = os.path.join(tmp_container, font_tmpdir)
         self._debug("* Installing font")
-        self._debug("  - From: {}", os.path.join(tmp_container, font_tmpdir))
+        self._debug("  - From: {}", font_srcdir)
         self._debug("  - To: {}", self.webfont_settings['fontdir_path'])
 
-        shutil.copytree(os.path.join(tmp_container, font_tmpdir), self.webfont_settings['fontdir_path'])
+        shutil.copytree(font_srcdir, self.webfont_settings['fontdir_path'])
 
         # Copy new manifest into font dir
+        manifest_src = os.path.join(tmp_container,
+                                    settings.ICOMOON_MANIFEST_FILENAME)
         self._debug("* Installing manifest")
-        self._debug("  - From: {}", os.path.join(tmp_container, settings.ICOMOON_MANIFEST_FILENAME))
+        self._debug("  - From: {}", manifest_src)
         self._debug("  - To: {}", self.webfont_settings['fontdir_path'])
-        shutil.copy(os.path.join(tmp_container, settings.ICOMOON_MANIFEST_FILENAME), self.webfont_settings['fontdir_path'])
+        shutil.copy(manifest_src, self.webfont_settings['fontdir_path'])
 
         # Remove temp directory when all is done
         self._debug("* Removing temporary dir")

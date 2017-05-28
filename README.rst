@@ -1,14 +1,11 @@
 .. _Django: https://www.djangoproject.com/
 .. _Icomoon: http://icomoon.io/
-.. _django-braces: http://django-braces.readthedocs.org/en/v1.3.1/
+.. _django-braces: http://django-braces.readthedocs.org/
 
 Django Icomoon
 ==============
 
 A `Django`_ app to deploy downloaded wefonts from `Icomoon`_ and display them in a gallery.
-
-.. warning::
-        Since version ``0.4.0`` Django support for 1.7 version and less has been dropped.
 
 Links
 *****
@@ -18,7 +15,7 @@ Links
 
 Requires
 ********
-
+* six;
 * `Django`_ >= 1.8;
 * `django-braces`_ >= 1.2.0;
 
@@ -61,7 +58,7 @@ Now you must define at least one webfont in your project settings like this: ::
 Each website entry is a dict containing the following values:
 
 fontdir_path
-    (Required) Absolute path to the webfont directory.
+    (Required) Absolute path to the webfont directory. It will be created with Manifest file and font files on each deploy.
 csspart_path
     (Optional) Absolute path where will be written the css part containing webfont icons.
 
@@ -70,11 +67,11 @@ Urls
 
 Just mount its urls in your main ``urls.py`` : ::
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         ...
-        (r'^icomoon/', include('icomoon.urls', namespace='icomoon')),
+        url(r'^icomoon/', include('icomoon.urls', namespace='icomoon')),
         ...
-    )
+    ]
 
 Templates
 ---------
@@ -89,9 +86,9 @@ Usage
 Gallery
 -------
 
-When it's installed you could reach the webfont gallery from ``/icomoon/``.
+When it's installed you can reach the webfont gallery at ``/icomoon/``.
 
-The gallery display all defined icons in the manifest, giving the CSS classname, the unicode codepoint and the UTF-8 code.
+The gallery display all defined icons in the manifest, giving the CSS classname, unicode codepoint and UTF-8 code for each defined icon.
 
 Deployment
 ----------
@@ -110,12 +107,19 @@ Default values for these two arguments are respectively ``Default`` and ``icomoo
 
 The tool will validate the archive content structure then if all requirements are meets (a JSON manifest and at least one supported font format) it will deploy the archive content to defined path (``fontdir_path``) in webfont settings.
 
-Optionaly, if a path (``csspart_path``) is defined for, the manifest will be used to build a css file where all icon selectors are defined, so you can import it to directly use your icons.
+Optionaly, if ``csspart_path`` is defined, the manifest will be used to build a css file where all icon selectors are defined, so you can import it to directly use your icons. You may potentially change its template ``icomoon/icon_map.css`` to build a Sass, Less or another format if needed.
 
 Finally the manifest is installed in the same directory than font files.
 
 History
 *******
+
+Version 1.0.0 - 2017/05/29
+--------------------------
+
+* Added tests structure;
+* Covered all code with tests except for the management command;
+* Confirmed support for Django 1.8 to Django 1.11, Python 2 and Python 3.5 through 'tox';
 
 Version 0.4.0 - 2016/04/06
 --------------------------
