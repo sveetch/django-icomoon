@@ -13,7 +13,16 @@ from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 class WebfontStore(object):
     """
-    Webfont store to collect every given manifest
+    Webfont store to collect every given manifest.
+
+    Store assume every webfont manifest file are located inside their webfont
+    directory set in their ``fontdir_path`` option.
+
+    Store does not create any file, it just parse manifest and store icon maps.
+
+    Manifest filename is the same for every webfont, it is given as
+    ``WebfontStore`` init argument ``manifest_filename``, commonly
+    ``selection.json``.
     """
     def __init__(self, manifest_filename):
         self.manifest_filename = manifest_filename
@@ -78,21 +87,27 @@ class WebfontStore(object):
 
         Args:
             webfont_name (string): Webfont key name. Used to store manifest
-                and potentially its parser error
+                and potentially its parser error.
             webfont_settings (dict): Webfont settings (an item value from
                 ``settings.ICOMOON_WEBFONTS``).
         """
         try:
             webfont_settings = extend_webfont_settings(webfont_settings)
         except IcomoonSettingsError as e:
-            self.errors[webfont_name] = "Invalid webfont settings for '{}': {}".format(webfont_name, e.value)
+            msg = "Invalid webfont settings for '{}': {}"
+            self.errors[webfont_name] = msg.format(webfont_name, e.value)
             return
 
-        filepath = os.path.join(webfont_settings['fontdir_path'], self.manifest_filename)
+        filepath = os.path.join(webfont_settings['fontdir_path'],
+                                self.manifest_filename)
+
         if os.path.exists(filepath):
             self.manifests[webfont_name] = self.parse_manifest(filepath)
         else:
-            self.errors[webfont_name] = "Filepath for webfont <strong>{name}</strong> does not exists: <code>{filepath}</code>".format(name=webfont_name, filepath=filepath)
+            msg = ("""Filepath for webfont <strong>{name}</strong> does not """
+                   """exists: <code>{filepath}</code>""")
+            self.errors[webfont_name] = msg.format(name=webfont_name,
+                                                   filepath=filepath)
 
     def fetch(self, webfonts):
         """
