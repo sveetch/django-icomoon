@@ -3,7 +3,7 @@ import shutil
 
 import pytest
 
-from icomoon.parser import WebfontStore
+from icomoon.store import WebfontStore
 
 
 # Attempted map from 'icobasic/selection.json' sample manifest

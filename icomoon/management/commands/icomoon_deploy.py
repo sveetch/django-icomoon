@@ -12,7 +12,7 @@ from django.core.management.base import CommandError, BaseCommand
 from django import template
 from django.template.loader import render_to_string
 
-from icomoon.parser import WebfontStore
+from icomoon.store import WebfontStore
 from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 class Command(BaseCommand):
