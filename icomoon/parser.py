@@ -23,6 +23,10 @@ class WebfontStore(object):
     Manifest filename is the same for every webfont, it is given as
     ``WebfontStore`` init argument ``manifest_filename``, commonly
     ``selection.json``.
+
+    Args:
+        manifest_filename (string): Manifest filename to search for in webfont
+            directory.
     """
     def __init__(self, manifest_filename):
         self.manifest_filename = manifest_filename

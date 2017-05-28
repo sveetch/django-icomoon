@@ -6,7 +6,7 @@ import pytest
 from icomoon.parser import WebfontStore
 
 
-# Attempted map from 'icobasic_selection.json' sample manifest
+# Attempted map from 'icobasic/selection.json' sample manifest
 ICOBASIC_MAP = {
     'heart': {
         'class_name': 'iconbasic-heart',
@@ -25,12 +25,73 @@ ICOBASIC_MAP = {
 }
 
 
+# Attempted map from 'icomoon/selection.json' sample manifest
+ICOMOON_MAP = {
+    "minus-alt": {
+        "class_name": "icon-minus-alt",
+        "int": 59649,
+        "hex": "0xe901",
+        "unicode": "U+E901",
+        "utf8": "\\e901"
+    },
+    "arrow-up": {
+        "class_name": "icon-arrow-up",
+        "int": 59954,
+        "hex": "0xea32",
+        "unicode": "U+EA32",
+        "utf8": "\\ea32"
+    },
+    "arrow-left": {
+        "class_name": "icon-arrow-left",
+        "int": 59960,
+        "hex": "0xea38",
+        "unicode": "U+EA38",
+        "utf8": "\\ea38"
+    },
+    "arrow-right": {
+        "class_name": "icon-arrow-right",
+        "int": 59956,
+        "hex": "0xea34",
+        "unicode": "U+EA34",
+        "utf8": "\\ea34"
+    },
+    "map-pin-fill": {
+        "class_name": "icon-map-pin-fill",
+        "int": 59650,
+        "hex": "0xe902",
+        "unicode": "U+E902",
+        "utf8": "\\e902"
+    },
+    "home": {
+        "class_name": "icon-home",
+        "int": 59651,
+        "hex": "0xe903",
+        "unicode": "U+E903",
+        "utf8": "\\e903"
+    },
+    "plus-alt": {
+        "class_name": "icon-plus-alt",
+        "int": 59648,
+        "hex": "0xe900",
+        "unicode": "U+E900",
+        "utf8": "\\e900"
+    },
+    "arrow-down": {
+        "class_name": "icon-arrow-down",
+        "int": 59958,
+        "hex": "0xea36",
+        "unicode": "U+EA36",
+        "utf8": "\\ea36"
+    }
+}
+
+
 def test_parser(settings):
     """Parse basic webfont manifest"""
     store = WebfontStore('selection.json')
 
     manifest_path = os.path.join(settings.TESTS_FIXTURES_DIR,
-                                 'icobasic_selection.json')
+                                 'icobasic', 'selection.json')
 
     icon_map = store.parse_manifest(manifest_path)
 
@@ -66,24 +127,67 @@ def test_get_manifest_error(webfont_name, webfont_settings, error):
 
 
 def test_get_manifest_success(settings, temp_builds_dir):
-    """TODO: Open and parse webfont manifest"""
+    """Succeed to get given webfont"""
     basedir = temp_builds_dir.join('get_manifest_success').strpath
-    os.makedirs(basedir)
 
+    # Install icobasic webfont in temporary dir
+    icobasic_path = os.path.join(basedir, 'icobasic')
+    os.makedirs(icobasic_path)
     shutil.copy(
-        os.path.join(settings.TESTS_FIXTURES_DIR,
-                     'icobasic_selection.json'),
-        os.path.join(basedir,
-                     'icobasic_selection.json'),
+        os.path.join(settings.TESTS_FIXTURES_DIR, 'icobasic',
+                     'selection.json'),
+        os.path.join(icobasic_path, 'selection.json'),
     )
 
-    store = WebfontStore('icobasic_selection.json')
+    store = WebfontStore('selection.json')
 
     store.get("Foo", {
-        'fontdir_path': basedir,
+        'fontdir_path': icobasic_path,
         'csspart_path': 'static/css/foo.scss',
     })
 
     assert 'Foo' in store.get_manifests()
 
     assert store.get_manifests()['Foo'] == ICOBASIC_MAP
+
+
+def test_fetch(settings, temp_builds_dir):
+    """Fetching all webfonts"""
+    basedir = temp_builds_dir.join('test_fetch').strpath
+
+    # Install icobasic webfont in temporary dir
+    icobasic_path = os.path.join(basedir, 'icobasic')
+    os.makedirs(icobasic_path)
+    shutil.copy(
+        os.path.join(settings.TESTS_FIXTURES_DIR, 'icobasic',
+                     'selection.json'),
+        os.path.join(icobasic_path, 'selection.json'),
+    )
+
+    # Install icomoon webfont in temporary dir
+    icomoon_path = os.path.join(basedir, 'icomoon')
+    os.makedirs(icomoon_path)
+    shutil.copy(
+        os.path.join(settings.TESTS_FIXTURES_DIR, 'icomoon',
+                     'selection.json'),
+        os.path.join(icomoon_path, 'selection.json'),
+    )
+
+    store = WebfontStore('selection.json')
+
+    store.fetch({
+        "Foo": {
+            'fontdir_path': icobasic_path,
+            'csspart_path': 'static/css/foo.scss',
+        },
+        "Bar": {
+            'fontdir_path': icomoon_path,
+            'csspart_path': 'static/css/bar.scss',
+        },
+    })
+
+    assert 'Foo' in store.get_manifests()
+    assert 'Bar' in store.get_manifests()
+
+    assert store.get_manifests()['Foo'] == ICOBASIC_MAP
+    assert store.get_manifests()['Bar'] == ICOMOON_MAP
