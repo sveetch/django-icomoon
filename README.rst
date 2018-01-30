@@ -107,12 +107,19 @@ Default values for these two arguments are respectively ``Default`` and ``icomoo
 
 The tool will validate the archive content structure then if all requirements are meets (a JSON manifest and at least one supported font format) it will deploy the archive content to defined path (``fontdir_path``) in webfont settings.
 
-Optionaly, if ``csspart_path`` is defined, the manifest will be used to build a css file where all icon selectors are defined, so you can import it to directly use your icons. You may potentially change its template ``icomoon/icon_map.css`` to build a Sass, Less or another format if needed.
+Optionaly, if ``csspart_path`` is defined, the manifest will be used to build a css file where all icon selectors are defined, so you can import it to directly use your icons. This option use ``ICOMOON_CSS_TEMPLATE`` settings to find template to use to build this file. Default value is ``icomoon/icon_map.css`` but there is also a template ``icomoon/icon_map.scss`` that will produce a Sass file with icons exposed as variables and mixin to include their classes.
 
 Finally the manifest is installed in the same directory than font files.
 
 History
 *******
+
+Version 1.1.0 - 2018/01/30
+--------------------------
+
+* Fixed compatibiliy with django>=1.10 in management command, close #9;
+* Added missing semicolon on pseudo element classes in CSS template;
+* Added ``icon_map.scss`` template to create an useful Sass file instead of simple CSS classes, close #5;
 
 Version 1.0.0 - 2017/05/29
 --------------------------

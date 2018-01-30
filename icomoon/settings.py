@@ -20,6 +20,8 @@ ICOMOON_MANIFEST_FILENAME = "selection.json"
 
 # Path to the CSS template that will contain icon map, this relative to templates directory
 ICOMOON_CSS_TEMPLATE = "icomoon/icon_map.css"
+# Use this instead to create a Sass file with icon exposed as variables
+#ICOMOON_CSS_TEMPLATE = "icomoon/icon_map.scss"
 
 # Structure and file requirements for the Icomoon webfont archive
 # Also paths are relative within ZIP archive

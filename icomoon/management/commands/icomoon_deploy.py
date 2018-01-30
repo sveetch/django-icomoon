@@ -5,11 +5,8 @@ TODO:
 """
 import json, os, shutil, tempfile, zipfile
 
-from optparse import OptionValueError, make_option
-
 from django.conf import settings
 from django.core.management.base import CommandError, BaseCommand
-from django import template
 from django.template.loader import render_to_string
 
 from icomoon.store import WebfontStore
@@ -17,9 +14,6 @@ from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 
 class Command(BaseCommand):
-    option_list = BaseCommand.option_list + (
-        #make_option("--name", dest="webfont_name", default=None, help="Webfont name as defined into settings.ICOMOON_WEBFONTS, this is required"),
-    )
     help = "Icomoon CLI to deploy an Icomoon webfont from downloaded ZIP archive."
 
 

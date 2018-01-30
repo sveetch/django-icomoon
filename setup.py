@@ -22,7 +22,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Framework :: Django',
-        "Framework :: Django :: 1.8",
         "Framework :: Django :: 1.9",
         "Framework :: Django :: 1.10",
         "Framework :: Django :: 1.11",
@@ -32,7 +31,7 @@ setup(
     ],
     install_requires=[
         'six',
-        'Django>=1.8',
+        'Django>=1.9',
         'django-braces>=1.2.0',
     ],
     include_package_data=True,
