@@ -1,7 +1,9 @@
 {% for icon_name,icon_values in icons.items %}$icon-{{ icon_values.class_name }}: "{{ icon_values.utf8 }}";
 {% endfor %}
 
-{% for icon_name,icon_values in icons.items %}.{{ icon_values.class_name }}::before {
-    content: $icon-{{ icon_values.class_name }};
+@mixin include-icons(){
+    {% for icon_name,icon_values in icons.items %}.{{ icon_values.class_name }}::before {
+        content: $icon-{{ icon_values.class_name }};
+    }
+    {% endfor %}
 }
-{% endfor %}

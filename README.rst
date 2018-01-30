@@ -114,6 +114,11 @@ Finally the manifest is installed in the same directory than font files.
 History
 *******
 
+Version 1.1.1 - 2018/01/30
+--------------------------
+
+* Fixed missing ``mixin()`` in Sass template;
+
 Version 1.1.0 - 2018/01/30
 --------------------------
 
