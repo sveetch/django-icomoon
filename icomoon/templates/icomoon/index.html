@@ -1,9 +1,9 @@
 {% extends "skeleton.html" %}
 
 {% block base_content %}
-<div class="row larger">
+<div class="row column larger">
     <h2>Available webfont icons</h2>
-    
+
     {% if webfont_store.errors %}
     <div data-alert class="alert-box alert round text-center">
         {% for font_name,msg in webfont_store.errors.items %}
@@ -11,7 +11,7 @@
         {% endfor %}
     </div>
     {% endif %}
-    
+
     {% if webfont_store == None %}
     <div data-alert class="alert-box alert round text-center">
         <p><code>settings.ICOMOON_MANIFEST_FILEPATH</code> is not configured, unable to find a Manifest file.</p>
@@ -19,9 +19,9 @@
     {% else %}
         {% for font_name,font_icons in webfont_store.get_manifests.items %}
         <h3>{{ font_name }} ({{ font_icons|length }})</h3>
-        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4 icomoon-icons">
+        <ul class="flex-grid icomoon-icons">
             {% for icon_key,icon_datas in font_icons.items %}
-            <li>
+            <li class="cell small-50 large-25">
                 <p class="text-center visual"><i class="{{ icon_datas.class_name }} icon-3x"></i></p>
                 <table class="expand">
                     <tr>
@@ -47,6 +47,6 @@
         {% if not forloop.last %}<hr>{% endif %}
         {% endfor %}
     {% endif %}
-    
+
 </div>
 {% endblock %}

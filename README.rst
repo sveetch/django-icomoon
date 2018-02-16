@@ -101,7 +101,7 @@ The first argument is the webfont key name (defined in your settings, see `Webfo
 
     ./manage.py icomoon_deploy [Webfont name] [Zip archive path]
 
-Default values for these two arguments are respectively ``Default`` and ``icomoon.zip``, so if they match your webfont settings, you don't need to give them: ::
+Default values for these two arguments are respectively ``Default`` and ``icomoon.zip``, if they match your webfont settings you don't need to give them: ::
 
     ./manage.py icomoon_deploy
 
@@ -113,6 +113,14 @@ Finally the manifest is installed in the same directory than font files.
 
 History
 *******
+
+Version 1.2.0 - 2018/02/16
+--------------------------
+
+* Fix Sass template for bad selector, close #10;
+* Cleaned icon gallery template;
+* Dropped support for Django <= 1.8;
+* Better Makefile for development install;
 
 Version 1.1.1 - 2018/01/30
 --------------------------

@@ -31,7 +31,7 @@ setup(
     ],
     install_requires=[
         'six',
-        'Django>=1.9',
+        'Django>=1.9,<1.12',
         'django-braces>=1.2.0',
     ],
     include_package_data=True,
