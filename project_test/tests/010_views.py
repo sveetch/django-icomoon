@@ -1,6 +1,6 @@
 import pytest
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 def test_view_from_admin(admin_client):

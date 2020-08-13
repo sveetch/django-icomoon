@@ -2,10 +2,12 @@
 """
 App URLs
 """
-from django.conf.urls import *
+from django.urls import path
 
 from icomoon.views import WebfontIconListView
 
+app_name = 'icomoon'
+
 urlpatterns = [
-    url(r'^$', WebfontIconListView.as_view(), name="index"),
+    path('', WebfontIconListView.as_view(), name="index"),
 ]

@@ -114,6 +114,15 @@ Finally the manifest is installed in the same directory than font files.
 History
 *******
 
+Version 1.3.0 - 2020/08/13
+--------------------------
+
+This is a maintenance release for recent (>=2.0) Django environment.
+
+* Drop support for Django<=2.0;
+* Drop support for Python2, at least Python 3.6 is required;
+
+
 Version 1.2.0 - 2018/02/16
 --------------------------
 
