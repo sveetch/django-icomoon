@@ -2,6 +2,8 @@
 .. _Django: https://www.djangoproject.com/
 .. _Icomoon: http://icomoon.io/
 
+.. django-icomoon documentation master file, created by David Thenon
+
 ==============
 Django Icomoon
 ==============
@@ -21,3 +23,21 @@ Dependancies
 
 * `Python`_>=3.6;
 * `Django`_ >= 2.0;
+
+User’s Guide
+************
+
+.. toctree::
+   :maxdepth: 2
+
+   install.rst
+   usage.rst
+
+Developer’s Guide
+*****************
+
+.. toctree::
+   :maxdepth: 1
+
+   development.rst
+   history.rst

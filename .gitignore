@@ -1,20 +1,40 @@
 # virtualenv
-/venv
+.venv
 
-#egg's specific
+# Packaging
+build
+dist
 *.egg-info
 
-#defaults
-/dist
-*.pyc
-*.pyo
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
-#tests
-.tox
+# Unit test / coverage reports
+htmlcov/
+.coverage
 .cache
-__pycache__
+.pytest_cache
+nosetests.xml
+coverage.xml
+.tox
 
-#django
-project_test/db.sqlite3
-project_test/project/settings/local.py
-project_test/project/static
+# Site media and builded statics
+/data/
+/sandbox/static
+
+# VS Code
+.vscode
+
+# Mac Os
+.DS_Store
+
+# Temp files
+*~
+.~lock*
+
+# Swap files
+*.sw[po]
+
+# Logging files
+*.log

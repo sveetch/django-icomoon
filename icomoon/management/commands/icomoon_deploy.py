@@ -3,7 +3,10 @@
 TODO:
     * Add a list option to only list defined webfont in settings;
 """
-import json, os, shutil, tempfile, zipfile
+import os
+import shutil
+import tempfile
+import zipfile
 
 from django.conf import settings
 from django.core.management.base import CommandError, BaseCommand
@@ -14,18 +17,34 @@ from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 
 class Command(BaseCommand):
-    help = "Icomoon CLI to deploy an Icomoon webfont from downloaded ZIP archive."
-
+    help = (
+        "Icomoon CLI to deploy an Icomoon webfont from downloaded ZIP archive."
+    )
 
     def add_arguments(self, parser):
-        parser.add_argument('webfont_name', nargs='?', default='Default', help="Webfont key name from 'settings.ICOMOON_MANIFEST_FILEPATH'. (default: %(default)s)")
-        parser.add_argument('archive_path', nargs='?', default='icomoon.zip', help="ZIP archive from icomoon to deploy. (default: %(default)s)")
+        parser.add_argument(
+            'webfont_name',
+            nargs='?',
+            default='Default',
+            help=(
+                "Webfont key name from 'settings.ICOMOON_MANIFEST_FILEPATH'. "
+                "(default: %(default)s)"
+            )
+        )
+        parser.add_argument(
+            'archive_path',
+            nargs='?',
+            default='icomoon.zip',
+            help="ZIP archive from icomoon to deploy. (default: %(default)s)"
+        )
 
     def handle(self, *args, **options):
         self.webfont_name = options['webfont_name']
         self.archive_path = options['archive_path']
-        self.css_templatepath = options.get('css_template', settings.ICOMOON_CSS_TEMPLATE)
-        self.requirements = options.get('requirements', settings.ICOMOON_ARCHIVE_REQUIREMENT)
+        self.css_templatepath = options.get('css_template',
+                                            settings.ICOMOON_CSS_TEMPLATE)
+        self.requirements = options.get('requirements',
+                                        settings.ICOMOON_ARCHIVE_REQUIREMENT)
         self.verbosity = int(options.get('verbosity'))
 
         self._info("* Using webfont name: {}", self.webfont_name)
@@ -33,14 +52,22 @@ class Command(BaseCommand):
         # Get the current manifest for given webfont name
         if self.webfont_name not in settings.ICOMOON_WEBFONTS:
             choices = "', '".join(settings.ICOMOON_WEBFONTS.keys())
-            self._error("There is no defined webfont name '{name}' in your settings, choices are: '{choices}'", name=self.webfont_name, choices=choices)
+            msg = (
+                "There is no defined webfont name '{name}' in your settings, "
+                "choices are: '{choices}'"
+            )
+            self._error(msg, name=self.webfont_name, choices=choices)
 
         try:
-            self.webfont_settings = extend_webfont_settings(settings.ICOMOON_WEBFONTS[self.webfont_name])
+            self.webfont_settings = extend_webfont_settings(
+                settings.ICOMOON_WEBFONTS[self.webfont_name]
+            )
         except IcomoonSettingsError as e:
-            self._error("Invalid webfont settings for '{}': {}", self.webfont_name, e.value)
+            msg = "Invalid webfont settings for '{}': {}"
+            self._error(msg, self.webfont_name, e.value)
 
-        self._info("* Using webfont font dir: {}", self.webfont_settings['fontdir_path'])
+        msg = "* Using webfont font dir: {}"
+        self._info(msg, self.webfont_settings['fontdir_path'])
 
         self.deploy()
         self._info("Finished !")
@@ -74,26 +101,35 @@ class Command(BaseCommand):
 
         with zipfile.ZipFile(self.archive_path, 'r') as zip_archive:
             font_dir = self.requirements['font_dir']+'/'
-            allowed_extensions = ['.'+item for item in self.requirements['extensions']]
+            allowed_extensions = [
+                '.' + item for item in self.requirements['extensions']
+            ]
             members = [member for member in zip_archive.namelist()]
 
             if settings.ICOMOON_MANIFEST_FILENAME not in members:
-                raise self._error("Icomoon archive must contain a JSON manifest '{}'", settings.ICOMOON_MANIFEST_FILENAME)
+                msg = "Icomoon archive must contain a JSON manifest '{}'"
+                raise self._error(msg, settings.ICOMOON_MANIFEST_FILENAME)
 
             if font_dir not in members:
-                raise self._error("Icomoon archive must contain the font directory '{}'", font_dir)
+                msg = "Icomoon archive must contain the font directory '{}'"
+                raise self._error(msg, font_dir)
 
             # Scan for supported font files
             font_files = []
             for item in members:
-                # Dont catch the font_dir itself nor sub directories, just files with allowed extensions
-                if item.startswith(font_dir) and not item.endswith('/') and os.path.splitext(item)[-1] in allowed_extensions:
+                # Dont catch the font_dir itself nor sub directories, just
+                # files with allowed extensions
+                if (item.startswith(font_dir)
+                    and not item.endswith('/')
+                        and os.path.splitext(item)[-1] in allowed_extensions):
                     font_files.append(item)
 
             if not font_files:
-                self._error("Font dir does not contain any supported format: {}", ', '.join(allowed_extensions))
+                msg = "Font dir does not contain any supported format: {}"
+                self._error(msg, ', '.join(allowed_extensions))
             else:
-                self._debug("* Finded font files in archive: {}", ', '.join(font_files))
+                msg = "* Finded font files in archive: {}"
+                self._debug(msg, ', '.join(font_files))
 
             # Extract files from archive
             tmp_container, css_content = self.extract(zip_archive, font_files)
@@ -121,7 +157,6 @@ class Command(BaseCommand):
             'fontdir_path': tmp_container,
         })
         icons = webfont_store.get_manifests()[self.webfont_name]
-        #print json.dumps(icons, indent=4)
 
         # Render CSS icon part
         css_content = self.render_css(self.css_templatepath, icons)
@@ -163,4 +198,3 @@ class Command(BaseCommand):
         # Remove temp directory when all is done
         self._debug("* Removing temporary dir")
         shutil.rmtree(tmp_container)
-
