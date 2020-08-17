@@ -86,11 +86,11 @@ ICOMOON_MAP = {
 }
 
 
-def test_parser(settings):
+def test_parser(testsettings):
     """Parse basic webfont manifest"""
     store = WebfontStore('selection.json')
 
-    manifest_path = os.path.join(settings.TESTS_FIXTURES_DIR,
+    manifest_path = os.path.join(testsettings.fixtures_path,
                                  'icobasic', 'selection.json')
 
     icon_map = store.parse_manifest(manifest_path)
@@ -121,12 +121,12 @@ def test_get_manifest_error(webfont_name, webfont_settings, error):
     """Fail to get given webfont"""
     store = WebfontStore('selection.json')
 
-    icon_map = store.get(webfont_name, webfont_settings)
+    store.get(webfont_name, webfont_settings)
 
     assert store.errors[webfont_name] == error
 
 
-def test_get_manifest_success(settings, temp_builds_dir):
+def test_get_manifest_success(testsettings, temp_builds_dir):
     """Succeed to get given webfont"""
     basedir = temp_builds_dir.join('get_manifest_success').strpath
 
@@ -134,7 +134,7 @@ def test_get_manifest_success(settings, temp_builds_dir):
     icobasic_path = os.path.join(basedir, 'icobasic')
     os.makedirs(icobasic_path)
     shutil.copy(
-        os.path.join(settings.TESTS_FIXTURES_DIR, 'icobasic',
+        os.path.join(testsettings.fixtures_path, 'icobasic',
                      'selection.json'),
         os.path.join(icobasic_path, 'selection.json'),
     )
@@ -151,7 +151,7 @@ def test_get_manifest_success(settings, temp_builds_dir):
     assert store.get_manifests()['Foo'] == ICOBASIC_MAP
 
 
-def test_fetch(settings, temp_builds_dir):
+def test_fetch(testsettings, temp_builds_dir):
     """Fetching all webfonts"""
     basedir = temp_builds_dir.join('test_fetch').strpath
 
@@ -159,7 +159,7 @@ def test_fetch(settings, temp_builds_dir):
     icobasic_path = os.path.join(basedir, 'icobasic')
     os.makedirs(icobasic_path)
     shutil.copy(
-        os.path.join(settings.TESTS_FIXTURES_DIR, 'icobasic',
+        os.path.join(testsettings.fixtures_path, 'icobasic',
                      'selection.json'),
         os.path.join(icobasic_path, 'selection.json'),
     )
@@ -168,7 +168,7 @@ def test_fetch(settings, temp_builds_dir):
     icomoon_path = os.path.join(basedir, 'icomoon')
     os.makedirs(icomoon_path)
     shutil.copy(
-        os.path.join(settings.TESTS_FIXTURES_DIR, 'icomoon',
+        os.path.join(testsettings.fixtures_path, 'icomoon',
                      'selection.json'),
         os.path.join(icomoon_path, 'selection.json'),
     )

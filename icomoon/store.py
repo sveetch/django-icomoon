@@ -6,8 +6,6 @@ import os
 import json
 from collections import OrderedDict
 
-from six import string_types
-
 from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 
@@ -55,10 +53,11 @@ class WebfontStore(object):
             * ``int``: Icon integer code like ``59649``;
             * ``hex``: Icon hexadecimal code like ``0xe901``;
             * ``unicode``: Icon unicode like ``U+E901``;
-            * ``utf8``! Icon UTF8 code like ``\e901``;
+            * ``utf8``: Icon UTF8 code like ``\\e901``;
+
         """
         # Given a string for file path to open
-        if isinstance(fp, string_types):
+        if isinstance(fp, str):
             fp = io.open(fp, 'r', encoding='utf-8')
 
         with fp as json_file:

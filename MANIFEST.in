@@ -7,7 +7,7 @@ recursive-include icomoon/static *
 recursive-include icomoon/locale *
 recursive-include icomoon/test_fixtures *
 
-recursive-exclude project_test *
-recursive-exclude project_test .cache
-recursive-exclude project_test __pycache__
-recursive-exclude project_test *.pyc
+recursive-exclude tests *
+recursive-exclude sandbox *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]

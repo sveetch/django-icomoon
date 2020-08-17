@@ -4,7 +4,9 @@ from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
 
 
 def test_extend_settings_success():
-    """Correct settings, nothing to do"""
+    """
+    Correct settings, nothing to do
+    """
     webfont_settings = {
         'fontdir_path': 'static/fonts',
         'csspart_path': 'static/css/icomoon_icons.scss',
@@ -78,7 +80,9 @@ def test_extend_settings_success():
     ),
 ])
 def test_extend_settings_csspart_path(webfont_settings, attempted):
-    """Missing or empty 'csspart_path' is automatically set to None"""
+    """
+    Missing or empty 'csspart_path' is automatically set to None
+    """
     assert extend_webfont_settings(webfont_settings) == attempted
 
 
@@ -104,6 +108,8 @@ def test_extend_settings_csspart_path(webfont_settings, attempted):
     },
 ])
 def test_extend_settings_fontdir_path(webfont_settings):
-    """Missing or empty 'fontdir_path' lead to exception"""
+    """
+    Missing or empty 'fontdir_path' lead to exception
+    """
     with pytest.raises(IcomoonSettingsError):
-        result = extend_webfont_settings(webfont_settings)
+        extend_webfont_settings(webfont_settings)

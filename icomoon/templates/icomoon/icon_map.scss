@@ -1,9 +1,15 @@
 {% for icon_name,icon_values in icons.items %}${{ icon_values.class_name }}: "{{ icon_values.utf8 }}";
 {% endfor %}
 
-@mixin include-icons(){
-    {% for icon_name,icon_values in icons.items %}.{{ icon_values.class_name }}::before {
-        content: ${{ icon_values.class_name }};
-    }
+$icons: (
+    {% for icon_name,icon_values in icons.items %}{{ icon_values.class_name }}: ${{ icon_values.class_name }},
     {% endfor %}
+);
+
+@mixin include-icons(){
+    @each $name, $value in $icons {
+        .#{% templatetag openbrace %}$name{% templatetag closebrace %}::before {
+            content: "#{% templatetag openbrace %}$value{% templatetag closebrace %}";
+        }
+    }
 }

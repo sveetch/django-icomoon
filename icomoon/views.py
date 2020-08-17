@@ -2,9 +2,6 @@
 """
 App views
 """
-import json, os
-
-#from django.db import models
 from django.conf import settings
 from django.views import generic
 
@@ -28,8 +25,9 @@ class WebfontIconListFreeView(generic.TemplateView):
 
         return context
 
+
 if getattr(settings, 'ICOMOON_PRIVATE', True):
-    from braces.views import LoginRequiredMixin
+    from django.contrib.auth.mixins import LoginRequiredMixin
 
     class WebfontIconListView(LoginRequiredMixin, WebfontIconListFreeView):
         pass
