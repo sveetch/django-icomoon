@@ -4,7 +4,7 @@
 History
 =======
 
-Version 1.4.0 - Unreleased
+Version 1.4.0 - 2020/08/18
 --------------------------
 
 **Project and package refactoring**
