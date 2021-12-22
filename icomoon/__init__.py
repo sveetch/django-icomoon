@@ -1,6 +1,4 @@
-"""
-A Django app to deploy wefonts from Icomoon and display them
-"""
+"""A Django app to deploy wefonts from Icomoon and display them."""
 from __future__ import absolute_import, unicode_literals
 
 import os

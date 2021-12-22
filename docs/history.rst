@@ -4,6 +4,13 @@
 History
 =======
 
+Version 1.4.1 - 2021/12/22
+--------------------------
+
+* Fixed short description from app ``__init__`` docstring as it seems to cause
+  installation to fail because of setuptools>=59 which introduces incompatible backward
+  error with description which contains a newline;
+
 Version 1.4.0 - 2020/08/18
 --------------------------
 

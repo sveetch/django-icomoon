@@ -14,23 +14,24 @@ help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo
 	@echo "  install             -- to install this project with virtualenv and Pip"
-	@echo ""
+	@echo
 	@echo "  clean               -- to clean EVERYTHING (Warning)"
 	@echo "  clean-pycache       -- to remove all __pycache__, this is recursive from current directory"
 	@echo "  clean-statics       -- to clean static stuff from sandbox"
 	@echo "  clean-install       -- to clean Python side installation"
-	@echo ""
+	@echo
 	@echo "  run                 -- to run Django development server"
 	@echo "  migrate             -- to apply demo database migrations"
 	@echo "  superuser           -- to create a superuser for Django admin"
 	@echo "  icomoon             -- to deploy an icon font map on demo from an Icomoon snapshot (icomoon.zip)"
-	@echo ""
+	@echo
 	@echo "  livedocs            -- to run livereload server to rebuild documentation on source changes"
-	@echo ""
+	@echo
 	@echo "  flake               -- to launch Flake8 checking"
 	@echo "  tests               -- to launch base test suite using Pytest"
 	@echo "  quality             -- to launch Flake8 checking and every tests suites"
-	@echo ""
+	@echo
+	@echo "  check-release       -- to check package release before uploading it to PyPi"
 	@echo "  release             -- to release package for latest version on PyPi (once release has been pushed to repository)"
 	@echo
 
@@ -95,19 +96,44 @@ livedocs:
 .PHONY: livedocs
 
 flake:
-	$(FLAKE) --show-source $(APPLICATION_NAME)
-	$(FLAKE) --show-source tests
+	@echo
+	@echo "==== Flake ===="
+	@echo
+	$(FLAKE) --statistics --show-source $(APPLICATION_NAME)
+	$(FLAKE) --statistics --show-source tests
 .PHONY: flake
 
 tests:
+	@echo
+	@echo "==== Tests ===="
+	@echo
 	$(PYTEST) -vv tests/
 .PHONY: tests
 
-quality: tests flake
-.PHONY: quality
-
-release:
+build-package:
+	@echo
+	@echo "==== Build package ===="
+	@echo
 	rm -Rf dist
 	$(VENV_PATH)/bin/python setup.py sdist
+.PHONY: build-package
+
+check-release: build-package
+	@echo
+	@echo "==== Check package ===="
+	@echo
+	$(TWINE) check dist/*
+.PHONY: check-release
+
+release: build-package
+	@echo
+	@echo "==== Release ===="
+	@echo
 	$(TWINE) upload dist/*
 .PHONY: release
+
+quality: tests flake check-release
+	@echo
+	@echo "♥ ♥ Everything should be fine ♥ ♥"
+	@echo
+.PHONY: quality
