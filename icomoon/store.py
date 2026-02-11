@@ -4,9 +4,11 @@ Icomoon manifest parser
 import io
 import os
 import json
+
+from pathlib import Path
 from collections import OrderedDict
 
-from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
+from .utils import IcomoonSettingsError, extend_webfont_settings
 
 
 class WebfontStore(object):
@@ -59,6 +61,8 @@ class WebfontStore(object):
         # Given a string for file path to open
         if isinstance(fp, str):
             fp = io.open(fp, 'r', encoding='utf-8')
+        elif isinstance(fp, Path):
+            fp = fp.open()
 
         with fp as json_file:
             webfont_manifest = json.load(json_file)

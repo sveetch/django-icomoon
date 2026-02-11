@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 TODO:
     * Add a list option to only list defined webfont in settings;
@@ -12,8 +11,8 @@ from django.conf import settings
 from django.core.management.base import CommandError, BaseCommand
 from django.template.loader import render_to_string
 
-from icomoon.store import WebfontStore
-from icomoon.utils import IcomoonSettingsError, extend_webfont_settings
+from ...store import WebfontStore
+from ...utils import IcomoonSettingsError, extend_webfont_settings
 
 
 class Command(BaseCommand):

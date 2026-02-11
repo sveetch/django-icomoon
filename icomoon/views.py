@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 """
 App views
 """
 from django.conf import settings
 from django.views import generic
 
-from icomoon.store import WebfontStore
+from .store import WebfontStore
 
 
 class WebfontIconListFreeView(generic.TemplateView):

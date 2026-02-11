@@ -1,5 +1,5 @@
 """
-Sandbox URL Configuration
+URL Configuration for sandbox
 """
 from django.conf import settings
 from django.conf.urls.static import static
@@ -10,10 +10,11 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('icomoon.urls', namespace='icomoon')),
+    path("", include("icomoon.urls")),
+    
 ]
 
-# This is only needed when using runserver with demo settings
+# This is only needed when using runserver with settings "DEBUG" enabled
 if settings.DEBUG:
     urlpatterns = (
         urlpatterns

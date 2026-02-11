@@ -10,6 +10,14 @@ dist
 __pycache__/
 *.py[cod]
 
+# Site media and built statics
+/var/
+/sandbox/static-sources/
+/frontend/package-lock.json
+
+# Settings
+localsettings.py
+
 # Unit test / coverage reports
 htmlcov/
 .coverage
@@ -18,10 +26,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 .tox
-
-# Site media and builded statics
-/data/
-/sandbox/static
 
 # VS Code
 .vscode

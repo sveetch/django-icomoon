@@ -1,23 +1,22 @@
 """
 Django settings for tests
 """
-from sandbox.settings.base import *
+from sandbox.settings.base import *  # noqa: F403
 
 DATABASES = {
-    # Development default database engine use sqlite3
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(DATA_DIR, 'db', 'tests.sqlite3'),
-        'TEST': {
-            'NAME': os.path.join(DATA_DIR, 'db', 'tests.sqlite3'),  # noqa
-        }
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
     }
 }
 
-# Absolute filesystem path to the directory that contain tests fixtures files
-TESTS_FIXTURES_DIR = os.path.join('..', 'tests', 'data_fixtures')
+# Media directory dedicated to tests to avoid polluting other environment
+# media directory
+MEDIA_ROOT = VAR_PATH / "media-tests"  # noqa: F405
 
-# Media directory dedicated to tests
-MEDIA_ROOT = os.path.join(DATA_DIR, "media-tests")
-
-from icomoon.settings import *
+# Disable every cache because it can trouble test on expected results
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
+}
