@@ -4,6 +4,18 @@
 History
 =======
 
+Version 1.4.2 - 2026/02/11
+--------------------------
+
+A maintenance release to pin setuptools requirement to ``<81.0.0`` since this release
+has totally dropped ``pkg_resources`` module.
+
+* Pinned requirements to ``setuptools<81.0.0``;
+* Added official support for Python 3.7;
+* Added official support for Django 3.2;
+* Fixed local installation for development;
+
+
 Version 1.4.1 - 2021/12/22
 --------------------------
 

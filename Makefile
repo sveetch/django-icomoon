@@ -7,7 +7,8 @@ PIP=$(VENV_PATH)/bin/pip
 FLAKE=$(VENV_PATH)/bin/flake8
 PYTEST=$(VENV_PATH)/bin/pytest
 TWINE=$(VENV_PATH)/bin/twine
-DJANGO_MANAGE=$(VENV_PATH)/bin/python sandbox/manage.py
+TOX_BIN=$(VENV_PATH)/bin/tox
+DJANGO_MANAGE=$(VENV_PATH)/bin/python manage.py
 SPHINX_RELOAD=$(VENV_PATH)/bin/python sphinx_reload.py
 
 help:
@@ -34,6 +35,8 @@ help:
 	@echo "  check-release       -- to check package release before uploading it to PyPi"
 	@echo "  release             -- to release package for latest version on PyPi (once release has been pushed to repository)"
 	@echo
+	@echo "  tox                 -- to launch tests for every Tox environments"
+	@echo
 
 clean-pycache:
 	rm -Rf .pytest_cache
@@ -55,9 +58,6 @@ clean: clean-install clean-pycache clean-statics
 
 venv:
 	virtualenv -p $(PYTHON_INTERPRETER) $(VENV_PATH)
-	# This is required for those ones using old distribution
-	$(PIP) install --upgrade pip
-	$(PIP) install --upgrade setuptools
 .PHONY: venv
 
 create-var-dirs:
@@ -78,7 +78,7 @@ superuser:
 .PHONY: superuser
 
 install: venv create-var-dirs
-	$(PIP) install -e .[dev]
+	$(PIP) install -e .[dev,quality]
 	${MAKE} migrate
 .PHONY: install
 
@@ -137,3 +137,10 @@ quality: tests flake check-release
 	@echo "♥ ♥ Everything should be fine ♥ ♥"
 	@echo
 .PHONY: quality
+
+tox:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Launch all Tox environments <---$(FORMATRESET)\n"
+	@echo ""
+	$(TOX_BIN)
+.PHONY: tox
