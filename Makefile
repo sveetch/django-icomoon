@@ -155,7 +155,7 @@ venv:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Install virtual environment <---$(FORMATRESET)\n"
 	@echo ""
-	virtualenv -p python3.9 $(VENV_PATH)
+	virtualenv -p $(PYTHON_INTERPRETER) $(VENV_PATH)
 .PHONY: venv
 
 install-backend:

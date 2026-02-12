@@ -6,12 +6,13 @@ Changelog
 Development
 ***********
 
-Another maintenance release which upgrade package to a more modern structure. This
-is backward incompatible with previous Python and Django support. The way to define
-settings or use the application have not changed.
+Another maintenance release which upgrade package to a more modern structure and
+upgrade Python and Django support.
 
-* Removed support for Python<3.9;
-* Added support for Python 3.9;
+* Removed support for Python<3.8;
+* Removed support for Django<3.2;
+* Added support for Python>=3.8;
+* Added support for Django>=3.2;
 * Improved sandbox demonstration;
 
 
