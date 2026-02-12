@@ -1,0 +1,52 @@
+///
+/// Icon utilities
+///
+/// Depends on:
+///
+/// - ../defaults
+///
+
+///
+/// Shortcut to set icon base styles and glyph.
+///
+/// @arg {String} $code [null]
+///   Optionnal character to use as content. You can avoid it if you just want to set
+///     icon base style on a global selector and just define the icon manually for
+///     each icon glyph class.
+///
+/// @arg {String} $code [null]
+///   Optionnal font family name to set. Obviously this is the font family which
+///     contains the icon glyphs. Default is "icomoon" as for an Icomoon project.
+///
+@mixin site-icon($code: null, $family: "icomoon") {
+    font-family: $family;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    @if $code {
+        content: $code;
+    }
+}
+
+///
+/// A mixin to assign icon glyphs to their respective class names
+///
+/// @arg {Map} $icon-map [null]
+///   Optionnal icon map to use. Default attempt to use a global variable `$icons`
+///     which should have been set in a previous module like site settings but you may
+///     use another. Be warned that multiple usage of this mixin with different
+///     map may overwrite some icon classes through the multiple usages.
+///
+@mixin site-include-icons($icon-map: $icons) {
+    @each $name, $value in $icon-map {
+        .#{$name}::before {
+            content: "#{$value}";
+        }
+    }
+}

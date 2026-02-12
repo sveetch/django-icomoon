@@ -1,0 +1,73 @@
+///
+/// Font family and utility class to use icons
+
+// List of available icon sizes (utility class like icon-sm, icon-md, etc..)
+$icon-sizes: (
+    "sm": 0.8em,
+    "md": inherit,
+    "lg": 1.5em,
+    "xl": 3em,
+    "xxl": 5em,
+) !default;
+
+// Font family which holds the icon webfont
+@font-face {
+    font-family: icomoon;
+    src: font-url("icons/icomoon.woff2") format("woff2"),
+         font-url("icons/icomoon.woff") format("woff"),
+         font-url("icons/icomoon.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Basic icon element prepend content with an icon from a class
+// like '.icon-close'
+[class^="icon-"],
+[class*=" icon-"] {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+        content:"q";
+        display: block;
+        @include site-icon;
+    }
+}
+
+// Insert icon at left inside of a Bootstrap button
+.btn[class^="icon-"],
+.btn[class*=" icon-"] {
+    font-family: inherit;
+
+    &::before {
+        margin-right: 0.55em;
+    }
+    &.ico-end {
+        flex-direction: row-reverse;
+
+        &::before {
+            margin-left: 0.55em;
+            margin-right: 0;
+        }
+    }
+    &.ico-pure {
+        &::before {
+            margin-right: 0;
+        }
+    }
+
+}
+
+@each $name, $value in $icon-sizes {
+    .icon-#{$name}:not(.btn) {
+        font-size: $value;
+    }
+    .btn.icon-#{$name} {
+        &::before {
+            font-size: $value;
+        }
+    }
+}
+
+// Import icon map part
+@include site-include-icons;

@@ -1,0 +1,82 @@
+///
+/// Useful basic functions.
+///
+/// This is to load before almost everything else (like object, components, settings,
+/// etc..) since functions may be used anywhere and do not rely on anything except
+/// sometime on default settings (which can be overriden after).
+///
+/// No dependancies.
+///
+@use "sass:math";
+
+$rem-base-size: 16px !default;
+$font-directory: "../fonts/" !default;
+///
+/// Strip unit from a number
+///
+@function strip-unit($num) {
+    @return math.div($num, $num * 0 + 1);
+}
+
+///
+/// Convert a number without unit to a number with 'rem' unit
+///
+@function convert-to-rem($value, $base-value: null) {
+    @if not $base-value {
+        $base-value: $rem-base-size;
+    }
+
+    $value: math.div(strip-unit($value), strip-unit($base-value)) * 1rem;
+
+    // Enforce zero as unitless value
+    @if $value == 0 {
+        $value: 0;
+    }
+
+    @return $value;
+}
+
+///
+/// Helper to convert pixel value to rem value
+/// This is a great help to calculate rem size from fixed size from a mockup,
+/// but remember to finally used the calculated value when it's done.
+///
+/// @arg {Number} $values [null]
+///     Number in pixel unit.
+///
+/// @arg {Number} $base-value [null]
+///     Default base document font size (in pixel).
+///
+/// @return {Number}
+///     Calculated number in 'rem'.
+///
+@function rem-calc($values, $base-value: null) {
+    @if $base-value == null {
+        $base-value: $rem-base-size;
+    }
+
+    $max: length($values);
+
+    @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+    $rem-values: ();
+
+    @for $i from 1 through $max {
+        $rem-values: append($rem-values, convert-to-rem(nth($values, $i), $base-value));
+    }
+
+    @return $rem-values;
+}
+
+///
+/// Shortand to augment given url with fonts directory.
+///
+/// @arg {String} $url [null]
+///     Relative path to prepend with fonts directory path or url.
+///
+/// @return {String}
+///     Url such as `$bb-font-directory` + `$url`.
+///
+@function font-url($url) {
+    @return url($font-directory + $url);
+}

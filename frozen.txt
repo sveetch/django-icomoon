@@ -1,0 +1,19 @@
+# Frozen requirement versions for 'django-icomoon==1.5.0rc0' installation
+Django==3.2.25
+# From extra requirements 'dev'
+factory-boy==3.3.3
+freezegun==1.5.5
+pyquery==2.0.1
+pytest-django==4.11.1
+pytest==8.4.2
+# From extra requirements 'quality'
+flake8==7.3.0
+tox==4.30.3
+# From extra requirements 'doc'
+furo==2025.12.19
+sphinx==7.4.7
+sphinx-copybutton==0.5.2
+# From extra requirements 'doc-live'
+livereload==2.7.1
+# From extra requirements 'release'
+twine==6.2.0

@@ -64,7 +64,7 @@ SITE_ID = 1
 USE_I18N = True
 
 # We want to avoid warning for this settings which is deprecated since Django 4.x but
-# needed for Django<=3.2
+# were needed for Django<=3.2
 if VERSION[0] < 4:
     # If you set this to False, Django will not format dates, numbers and
     # calendars according to the current locale.
@@ -158,8 +158,8 @@ LOGOUT_REDIRECT_URL = "/"
 # directory, require also 'django.forms' in INSTALLED_APPS
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
-
-
+# Sandbox just uses the admin login view
+LOGIN_URL = "/admin/login/"
 
 """
 SPECIFIC BASE APPLICATIONS SETTINGS BELOW
@@ -167,3 +167,14 @@ SPECIFIC BASE APPLICATIONS SETTINGS BELOW
 from icomoon.settings import *  # noqa: E402,F401,F403
 
 INSTALLED_APPS.append("icomoon")
+
+ICOMOON_CSS_TEMPLATE = "icomoon/icon_map.scss"
+
+ICOMOON_WEBFONTS = {
+    "Default": {
+        "fontdir_path": PROJECT_PATH / "static-sources" / "fonts" / "icons",
+        "csspart_path": (
+            BASE_DIR / "frontend/scss/settings/_icomoon_icons.scss"
+        ),
+    }
+}

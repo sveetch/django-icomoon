@@ -1,52 +1,57 @@
 {% extends "skeleton.html" %}
 
 {% block base_content %}
-<div class="row column larger">
+<div class="container icomoon-browser">
     <h2>Available webfont icons</h2>
 
     {% if webfont_store.errors %}
-    <div data-alert class="alert-box alert round text-center">
-        {% for font_name,msg in webfont_store.errors.items %}
-        <p>{{ msg|safe }}</p>
-        {% endfor %}
-    </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            {% for font_name,msg in webfont_store.errors.items %}
+                <p>{{ msg|safe }}</p>
+            {% endfor %}
+        </div>
     {% endif %}
 
     {% if webfont_store == None %}
-    <div data-alert class="alert-box alert round text-center">
-        <p><code>settings.ICOMOON_MANIFEST_FILEPATH</code> is not configured, unable to find a Manifest file.</p>
-    </div>
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <div>
+                <code>settings.ICOMOON_MANIFEST_FILEPATH</code> is not configured, unable to find a Manifest file.
+            </div>
+        </div>
     {% else %}
         {% for font_name,font_icons in webfont_store.get_manifests.items %}
-        <h3>{{ font_name }} ({{ font_icons|length }})</h3>
-        <ul class="flex-grid icomoon-icons">
-            {% for icon_key,icon_datas in font_icons.items %}
-            <li class="cell small-50 large-25">
-                <p class="text-center visual"><i class="{{ icon_datas.class_name }} icon-3x"></i></p>
-                <table class="expand">
-                    <tr>
-                        <th class="text-right">CSS</th>
-                        <td>{{ icon_datas.class_name }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right">Unicode</th>
-                        <td>{{ icon_datas.unicode }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right">UTF-8</th>
-                        <td>{{ icon_datas.utf8 }}</td>
-                    </tr>
-                    <tr>
-                        <th class="text-right">Integer</th>
-                        <td>{{ icon_datas.int }}</td>
-                    </tr>
-                </table>
-            </li>
-            {% endfor %}
-        </ul>
-        {% if not forloop.last %}<hr>{% endif %}
+            <h3>{{ font_name }} ({{ font_icons|length }})</h3>
+
+            <div class="glyph-palette row align-items-start g-3 p-2">
+                {% for icon_key,icon_datas in font_icons.items %}
+                    <div class="col-12 col-md-6 col-lg-3 col-xl-2">
+                        <div class="card">
+                            <div class="visual card-img-top">
+                                <i class="{{ icon_datas.class_name }} icon-lg"></i>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-title font-monospace">{{ icon_datas.class_name }}</p>
+
+                                <table class="font-monospace">
+                                    <tr>
+                                        <th class="text-right">Unicode</th>
+                                        <td>{{ icon_datas.unicode }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-right">UTF-8</th>
+                                        <td>{{ icon_datas.utf8 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-right">Integer</th>
+                                        <td>{{ icon_datas.int }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         {% endfor %}
     {% endif %}
-
 </div>
 {% endblock base_content %}

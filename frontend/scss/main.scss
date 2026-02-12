@@ -5,11 +5,13 @@
 ///
 
 @import "bootstrap/scss/functions";
+@import "./tools/functions";
+@import "./tools/icons";
 
 // Load every site settings
 @import "./settings/colors";
 @import "./settings/site";
-@import "./settings/icons";
+@import "./settings/icomoon_icons";
 @import "./settings/bootstrap";
 
 // Bootstrap functions and mixins
@@ -65,5 +67,9 @@
 
 // @import "./generic/...";
 // @import "./elements/...";
-// @import "./objects/...";
+
+@import "./objects/icons";
+
+@import "./components/icomoon";
+
 // @import "./trumps/...";

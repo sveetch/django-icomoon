@@ -1,5 +1,6 @@
 # virtualenv
 .venv
+.python-version
 
 # Packaging
 build
@@ -14,6 +15,8 @@ __pycache__/
 /var/
 /sandbox/static-sources/
 /frontend/package-lock.json
+/frontend/scss/settings/_icomoon_icons.scss
+/icomoon.zip
 
 # Settings
 localsettings.py

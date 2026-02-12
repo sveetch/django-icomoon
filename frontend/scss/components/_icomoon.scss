@@ -1,0 +1,31 @@
+///
+/// Icomoon browser component
+///
+.icomoon-browser {
+    .glyph-palette {
+        .visual {
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--bs-body-color);
+            background-color: var(--bs-tertiary-bg);
+        }
+
+        .card-body {
+            padding: 0.4rem;
+            font-size: rem-calc(12px);
+
+            p {
+                user-select: all;
+            }
+
+            table {
+                width: 100%;
+
+                th,
+                td {
+                    vertical-align: top;
+                }
+            }
+        }
+    }
+}
