@@ -1,4 +1,4 @@
-.. _intro_install:
+.. _install_intro:
 
 =======
 Install
@@ -8,24 +8,30 @@ Install package in your environment : ::
 
     pip install django-icomoon
 
-For development usage see :ref:`install_development`.
+For development usage see :ref:`development_install`.
+
+Configuration
+*************
 
 Add it to your installed Django apps in settings : ::
 
     INSTALLED_APPS = (
         ...
         "icomoon",
-        ...
     )
 
-Import default app settings: ::
+Then load default application settings in your settings file: ::
 
     from icomoon.settings import *
 
-Default behavior require users to be authenticated to view the gallery, if you
-want to open it for anonymous define the following setting: ::
+Then mount applications URLs: ::
 
-    ICOMOON_PRIVATE = False
+    urlpatterns = [
+        ...
+        path("", include("icomoon.urls")),
+    ]
+
+There is no database migrations to apply.
 
 
 .. _install_manifest:
@@ -50,18 +56,6 @@ fontdir_path
 csspart_path
     (Optional) Absolute path where will be written the css part containing
     webfont icons.
-
-
-Urls
-----
-
-Just mount its urls in your main ``urls.py`` : ::
-
-    urlpatterns = [
-        ...
-        path("icomoon/", include("icomoon.urls", namespace="icomoon")),
-        ...
-    ]
 
 
 Templates
@@ -92,3 +86,9 @@ Here is an example of a this skeleton template: ::
 
 The most important thing to retain is the template block ``base_content`` where
 the app template will insert its content.
+
+Settings
+********
+
+.. automodule:: icomoon.settings
+   :members:

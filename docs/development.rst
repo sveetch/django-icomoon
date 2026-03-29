@@ -8,7 +8,7 @@
 .. _livereload: https://livereload.readthedocs.io
 .. _twine: https://twine.readthedocs.io
 
-.. _intro_development:
+.. _development_intro:
 
 ===========
 Development
@@ -28,7 +28,7 @@ django-icomoon is developed with:
 Every requirements are available in package extra requirements in section
 ``dev``.
 
-.. _install_development:
+.. _development_install:
 
 Install for development
 ***********************
@@ -46,11 +46,10 @@ latest commit on master branch with some development tools.
 Unittests
 ---------
 
-Unittests are made to works on `Pytest`_, a shortcut in Makefile is available
+Unittests are made to work on `Pytest`_, a shortcut in Makefile is available
 to start them on your current development install: ::
 
     make tests
-
 
 Tox
 ---
@@ -58,39 +57,45 @@ Tox
 To ease development against multiple Python versions a tox configuration has
 been added. You are strongly encouraged to use it to test your pull requests.
 
-Before using it you will need to install tox, it is recommended to install it
-at your system level (tox dependancy is not in requirements): ::
+Just execute Tox: ::
 
-    sudo pip install tox
+    make tox
 
-Then go in the ``django-icomoon`` directory, where the
-``setup.py`` and ``tox.ini`` live and execute tox: ::
-
-    tox
+This will run tests for all configured Tox environments, it may takes some time so you
+may use it only before releasing as a final check.
 
 Documentation
 -------------
 
-Use the Makefile action ``livedocs`` to serve documentation and automatically
-rebuild it when you change documentation files.
+You can easily build the documentation from one Makefile action: ::
 
-When environnement is activated, you can use following command from ``docs/``
-directory: ::
+    make docs
+
+There is Makefile action ``livedocs`` to serve documentation and automatically
+rebuild it when you change documentation files: ::
 
     make livedocs
 
-And go on ``http://localhost:8002/`` or your server machine IP with port 8002.
+Then go on ``http://localhost:8002/`` or your server machine IP with port 8002.
+
+Note that you need to build the documentation at least once before using
+``livedocs``.
 
 Releasing
 ---------
 
-When you have a release to do, after you have correctly push all your commits
-you can use the shortcut: ::
+Before releasing, you must ensure about quality, use the command below to run every
+quality check tasks: ::
+
+    make quality
+
+If quality is correct and after you have correctly push all your commits
+you can proceed to release: ::
 
     make release
 
-Which will build the package release and send it to Pypi with `twine`_.
-You may think to
+This will build the package release and send it to Pypi with `twine`_.
+You will have to
 `configure your Pypi account <https://twine.readthedocs.io/en/latest/#configuration>`_
 on your machine to avoid to input it each time.
 

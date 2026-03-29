@@ -9,16 +9,16 @@ right after the line which load the default app settings.
 
 ICOMOON_WEBFONTS = {}
 """
-Define available webfonts
+Define available webfonts: ::
 
-ICOMOON_WEBFONTS = {
-    "Default": {
-        # Where the font files belong and where they will be deployed
-        "fontdir_path": "/home/foo/bar/static/fonts",
-        # Where the css part with all icon selectors will be written
-        "csspart_path": "/home/foo/bar/static/css/icomoon_icons.scss",
-    },
-}
+    ICOMOON_WEBFONTS = {
+        "Default": {
+            # Where the font files belong and where they will be deployed
+            "fontdir_path": "/home/foo/bar/static/fonts",
+            # Where the css part with all icon selectors will be written
+            "csspart_path": "/home/foo/bar/static/css/icomoon_icons.scss",
+        },
+    }
 """
 
 ICOMOON_PRIVATE = True

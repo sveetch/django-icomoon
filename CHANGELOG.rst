@@ -14,6 +14,7 @@ upgrade Python and Django support.
 * Added support for Python>=3.8;
 * Added support for Django>=3.2;
 * Improved sandbox demonstration;
+* Updated documentation to last Sphinx and Furo theme;
 
 A new major release will drop support for Python<3.10 and Django<5.2
 

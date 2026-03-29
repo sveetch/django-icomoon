@@ -1,11 +1,13 @@
 .. _Python: https://www.python.org/
 .. _Django: https://www.djangoproject.com/
+.. _Icomoon: http://icomoon.io/
 
 ==============
 Django Icomoon
 ==============
 
-A Django app to deploy webfonts from Icomoon and display them
+A `Django`_ app to deploy downloaded webfonts from `Icomoon`_ and display
+them into a gallery.
 
 
 Dependencies

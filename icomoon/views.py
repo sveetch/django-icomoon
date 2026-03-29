@@ -9,7 +9,7 @@ from .store import WebfontStore
 
 class WebfontIconListFreeView(generic.TemplateView):
     """
-    View listing icon getted from Icomoon manifest
+    View listing icon found from Icomoon manifest
     """
     template_name = "icomoon/index.html"
 

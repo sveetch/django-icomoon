@@ -1,6 +1,3 @@
-"""
-Icomoon manifest parser
-"""
 import io
 import os
 import json
