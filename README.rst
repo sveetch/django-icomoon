@@ -11,8 +11,8 @@ A Django app to deploy webfonts from Icomoon and display them
 Dependencies
 ************
 
-* `Python`_>=3.10;
-* `Django`_>=4.2;
+* `Python`_>=3.8;
+* `Django`_>=3.2;
 
 
 Links

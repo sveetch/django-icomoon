@@ -15,6 +15,8 @@ upgrade Python and Django support.
 * Added support for Django>=3.2;
 * Improved sandbox demonstration;
 
+A new major release will drop support for Python<3.10 and Django<5.2
+
 
 Version 1.4.2 - 2026/02/11
 **************************
