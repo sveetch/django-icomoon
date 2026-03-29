@@ -3,8 +3,8 @@
 Changelog
 =========
 
-Development
-***********
+Version 1.5.0 - 2026/03/29
+**************************
 
 Another maintenance release which upgrade package to a more modern structure and
 upgrade Python and Django support.
